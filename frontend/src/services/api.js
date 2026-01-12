@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+const API_URL = 'https://servicesrequestmanagementsystem1.onrender.com/api';
+
 const api = axios.create({
   baseURL: API_URL,
   headers: {
@@ -27,53 +29,27 @@ api.interceptors.response.use(
   }
 );
 
-// src/api/authAPI.js
-const API_URL = process.env.VITE_API_URL; // 🔹 Render env variable
-
 export const authAPI = {
-  login: async ({ email, password }) => {
+  register: async (userData) => {
     try {
-      const response = await fetch(`${API_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",       // 🔹 Cross-origin cookies
-        body: JSON.stringify({ email, password }),
-      });
-
-      if (!response.ok) {
-        const err = await response.json();
-        return { success: false, message: err.message || "Login failed" };
-      }
-
-      const data = await response.json();
-      return { success: true, user: data.user };
+      const response = await api.post('/auth/register', userData);
+      return response.data;
     } catch (error) {
-      return { success: false, message: error.message || "Login failed" };
+      throw new Error(error.response?.data?.message || 'Registration failed');
     }
   },
-
-  register: async ({ name, email, password }) => {
+  login: async (credentials) => {
     try {
-      const response = await fetch(`${API_URL}/auth/register`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-        body: JSON.stringify({ name, email, password }),
-      });
-
-      if (!response.ok) {
-        const err = await response.json();
-        return { success: false, message: err.message || "Register failed" };
+      const response = await api.post('/auth/login', credentials);
+      if (response.data.token) {
+        localStorage.setItem('token', response.data.token);
+        localStorage.setItem('user', JSON.stringify(response.data.user));
       }
-
-      const data = await response.json();
-      return { success: true, user: data.user };
+      return response.data;
     } catch (error) {
-      return { success: false, message: error.message || "Register failed" };
+      throw new Error(error.response?.data?.message || 'Login failed');
     }
-  }
-};
-
+  },
   verifyEmail: async (token) => {
     try {
       const cleanToken = token.trim();
@@ -94,7 +70,7 @@ export const authAPI = {
       throw error;
     }
   },
-{}
+};
 
 export const serviceRequestAPI = {
   getAll: async () => {
