@@ -27,9 +27,10 @@ export const AuthProvider = ({ children }) => {
     setLoading(false);
   }, []);
 
+const API_URL = import.meta.env.VITE_API_URL; 
   const login = async (email, password) => {
     try {
-      const response = await authAPI.login({ email, password });
+      const response = await API_URL.login({ email, password });
       setUser(response.user);
       setIsAuthenticated(true);
       return { success: true, data: response };
@@ -43,7 +44,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     try {
-      const response = await authAPI.register({ name, email, password });
+      const response = await API_URL.register({ name, email, password });
       return { success: true, data: response };
     } catch (error) {
       return {
