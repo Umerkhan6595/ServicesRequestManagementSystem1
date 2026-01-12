@@ -28,31 +28,38 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
 
-  const login = async (email, password) => {
-    try {
-      const response = await authAPI.login({ email, password });
-      setUser(response.user);
-      setIsAuthenticated(true);
-      return { success: true, data: response };
-    } catch (error) {
-      return {
-        success: false,
-        message: error.message || error.response?.data?.message || 'Login failed',
-      };
-    }
-  };
+  // src/api/authAPI.js
+const API_URL = import.meta.env.VITE_API_URL; // Vercel / local env
 
-  const register = async (name, email, password) => {
+const authAPI = {
+  login: async ({ email, password }) => {
     try {
-      const response = await authAPI.register({ name, email, password });
-      return { success: true, data: response };
+      const res = await fetch(`${API_URL}/auth/login`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // 🔥 cross-origin cookies
+        body: JSON.stringify({ email, password }),
+      });
+      return await res.json();
     } catch (error) {
-      return {
-        success: false,
-        message: error.message || error.response?.data?.message || 'Registration failed',
-      };
+      return { success: false, message: error.message || "Login failed" };
     }
-  };
+  },
+
+  register: async ({ name, email, password }) => {
+    try {
+      const res = await fetch(`${API_URL}/auth/register`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include", // 🔥 cross-origin cookies
+        body: JSON.stringify({ name, email, password }),
+      });
+      return await res.json();
+    } catch (error) {
+      return { success: false, message: error.message || "Register failed" };
+    }
+  }
+};
 
   const logout = () => {
     localStorage.removeItem('token');
