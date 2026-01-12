@@ -26,6 +26,20 @@ const Login = () => {
     }
   };
 
+const API_URL = import.meta.env.VITE_API_URL; // <-- Vercel ke liye env variable
+
+ const authAPI = {
+  login: async ({ email, password }) => {
+    return fetch(`${API_URL}/auth/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",   // 🔥 Required for cross-origin cookies
+      body: JSON.stringify({ email, password }),
+    }).then(res => res.json());
+  }
+};
+
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 py-12">
       <div className="absolute inset-0 -z-10 bg-gradient-to-br from-white to-gray-50" />
