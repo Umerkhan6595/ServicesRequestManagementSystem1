@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+}
+
+@layer base {
+  html, body, #root { height: 100%; }
+  body {
+    @apply bg-gray-50 text-gray-800 antialiased font-sans;
+    font-family: var(--font-sans);
+  }
+
+  h1, h2, h3, h4 { line-height: 1.1; }
+}
+
+@layer components {
+  /* Reusable button styles */
+  .btn { @apply inline-flex items-center justify-center rounded-md font-semibold px-4 py-2 transition-shadow shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2; }
+  .btn-primary { @apply bg-primary text-white hover:opacity-95; }
+  .btn-ghost { @apply bg-transparent text-primary hover:bg-primary/10; }
+
+  /* Card & glass styles */
+  .card { @apply bg-white/95 backdrop-blur-md rounded-xl p-6 shadow-lg border border-gray-100; }
+  .glass { @apply bg-white/80 backdrop-blur-sm rounded-lg shadow-sm; }
+
+  /* Smaller utility helpers */
+  .muted { @apply text-gray-500; }
+  .container-max { @apply max-w-6xl mx-auto px-4; }
+}
+
+/* You can add small custom utilities if needed */
+@layer utilities {
+  .text-gradient {
+    background: linear-gradient(90deg, theme('colors.primary.600'), theme('colors.primary.400'));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
