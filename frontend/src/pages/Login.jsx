@@ -26,7 +26,7 @@ const Login = () => {
     }
   };
 
-const API_URL = import.meta.env.VITE_API_URL; // <-- Vercel ke liye env variable
+const API_URL = process.env.VITE_API_URL; // <-- Vercel ke liye env variable
 
  const authAPI = {
   login: async ({ email, password }) => {
