@@ -32,12 +32,10 @@ api.interceptors.response.use(
 export const authAPI = {
   register: async (userData) => {
     try {
-      // ❌ Pehle: const response = await api.post('/api/auth/register', userData);
-      // ✅ Ab: Sirf '/auth/register' likhein
-      const response = await api.post('/auth/register', userData); 
+      const response = await api.post('/auth/register', userData);
       return response.data;
     } catch (error) {
-       // ... error logic
+      throw new Error(error.response?.data?.message || 'Registration failed');
     }
   },
   login: async (credentials) => {
