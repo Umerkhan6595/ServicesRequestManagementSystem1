@@ -30,19 +30,21 @@ exports.register = async (req, res) => {
   const savedUser = await User.findById(user._id);
   console.log('Token saved in DB:', savedUser.verificationToken);
   console.log('Tokens match:', savedUser.verificationToken === token);
-  const verifyLink = `https://servicesrequestmanagementsystem1.onrender.com/verify-email/${token}`;
+  const verifyLink = `http://localhost:5173//verify-email/${token}`;
+  // ensure single slash in link
+  const cleanVerifyLink = verifyLink.replace('//verify-email', '/verify-email');
   
-  console.log('Verification link:', verifyLink);
+  console.log('Verification link:', cleanVerifyLink);
   
   console.log('Registration - Token generated:', token.substring(0, 10) + '...');
   console.log('Registration - Token length:', token.length);
-  console.log('Registration - Verification link:', verifyLink.substring(0, 50) + '...');
+  console.log('Registration - Verification link:', cleanVerifyLink.substring(0, 50) + '...');
 
   await sendEmail(
     email,
     'Verify Your Email',
     `<h3>Click to verify your email</h3>
-     <a href="${verifyLink}">${verifyLink}</a>`
+     <a href="${cleanVerifyLink}">${cleanVerifyLink}</a>`
   );
 
   res.status(201).json({
@@ -92,6 +94,10 @@ exports.verifyEmail = async (req, res) => {
       }
     }
 
+    if (!user) {
+      console.log('No user found for token');
+      return res.status(400).json({ success: false, message: 'Invalid or expired verification token' });
+    }
     console.log('User found:', user.email);
     console.log('User isVerified:', user.isVerified);
 

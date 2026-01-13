@@ -9,12 +9,17 @@ const sendEmail = async (email, subject, html) => {
     }
   });
 
-  await transporter.sendMail({
-    from: `"Auth App" <${process.env.EMAIL_USER}>`,
-    to: email,
-    subject,
-    html
-  });
+  try {
+    await transporter.sendMail({
+      from: `"Auth App" <${process.env.EMAIL_USER}>`,
+      to: email,
+      subject,
+      html
+    });
+  } catch (err) {
+    console.error('Failed to send email:', err && err.message ? err.message : err);
+    throw new Error('Failed to send email');
+  }
 };
 
 module.exports = sendEmail;
