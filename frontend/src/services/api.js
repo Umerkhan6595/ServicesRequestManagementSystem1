@@ -32,7 +32,7 @@ api.interceptors.response.use(
 export const authAPI = {
   register: async (userData) => {
     try {
-      const response = await api.post('/auth/register', userData);
+      const response = await api.post('https://servicesrequestmanagementsystem1.onrender.com/auth/register', userData);
       return response.data;
     } catch (error) {
       throw new Error(error.response?.data?.message || 'Registration failed');
@@ -40,7 +40,7 @@ export const authAPI = {
   },
   login: async (credentials) => {
     try {
-      const response = await api.post('/auth/login', credentials);
+      const response = await api.post('https://servicesrequestmanagementsystem1.onrender.com/auth/login', credentials);
       if (response.data.token) {
         localStorage.setItem('token', response.data.token);
         localStorage.setItem('user', JSON.stringify(response.data.user));
