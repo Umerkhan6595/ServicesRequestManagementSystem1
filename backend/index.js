@@ -11,7 +11,6 @@ connectDB();
 const PORT = process.env.PORT;
 const app = express();
 
-const _dirname = path.resolve();
 
 app.use(cors({
     origin: 'https://servicesrequestmanagementsystem1.onrender.com/api',
@@ -26,10 +25,9 @@ app.use('/api/service-requests', require('./routes/serviceRequestRoutes'));
 
 
 const __dirname = path.resolve();
-
 app.use(express.static(path.join(__dirname, "dist")));
 
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 app.listen(PORT, () => {
