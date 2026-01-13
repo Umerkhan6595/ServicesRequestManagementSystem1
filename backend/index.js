@@ -24,11 +24,11 @@ app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/service-requests', require('./routes/serviceRequestRoutes'));
 
 
-const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "dist")));
+const _dirname = path.resolve();
+app.use(express.static(path.join(_dirname, "frontend", "dist")));
 
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
 });
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
