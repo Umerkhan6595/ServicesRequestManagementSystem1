@@ -26,7 +26,7 @@ app.use('/api/service-requests', require('./routes/serviceRequestRoutes'));
 
 
 app.use(express.static(path.join(_dirname, '/frontend/dist')));
-app.get("/verify-email/:token", (req, res) => {
+app.get("/", (_, res) => {
     res.sendFile(path.join(_dirname, '/frontend/dist/index.html'));
 });
 
