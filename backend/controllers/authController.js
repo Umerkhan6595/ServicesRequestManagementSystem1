@@ -30,7 +30,7 @@ exports.register = async (req, res) => {
   const savedUser = await User.findById(user._id);
   console.log('Token saved in DB:', savedUser.verificationToken);
   console.log('Tokens match:', savedUser.verificationToken === token);
-  const verifyLink = `https://servicesrequestmanagementsystem1.onrender.com/verify-email/${token}`;
+  const verifyLink = `http://localhost:8000/verify-email/${token}`;
   
   console.log('Verification link:', verifyLink);
   
