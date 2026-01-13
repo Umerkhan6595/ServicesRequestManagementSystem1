@@ -11,6 +11,8 @@ connectDB();
 const PORT = process.env.PORT;
 const app = express();
 
+const _dirname = path.resolve();
+
 
 app.use(cors({
     origin: "http://localhost:5173",
@@ -22,6 +24,12 @@ app.use(express.json());
 
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/service-requests', require('./routes/serviceRequestRoutes'));
+
+app.use(express.static(path.join(_dirname, '/frontend/dist')));
+
+app.get('/', (req, res) => {
+  res.sendFile(path.join(_dirname, "frontend", "dist", "index.html"));
+});
 
 
 app.listen(PORT, () => {
