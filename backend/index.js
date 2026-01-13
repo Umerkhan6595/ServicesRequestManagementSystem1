@@ -14,7 +14,7 @@ const app = express();
 const _dirname = path.resolve();
 
 app.use(cors({
-    origin: 'https://servicesrequestmanagementsystem1.onrender.com',
+    origin: 'https://servicesrequestmanagementsystembackend.onrender.com',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
