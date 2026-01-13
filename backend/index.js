@@ -14,7 +14,7 @@ const app = express();
 const _dirname = path.resolve();
 
 app.use(cors({
-    origin: 'https://servicesrequestmanagementsystem1.onrender.com',
+    origin: 'https://servicesrequestmanagementsystem1.onrender.com/api',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
@@ -26,7 +26,7 @@ app.use('/api/service-requests', require('./routes/serviceRequestRoutes'));
 
 
 app.use(express.static(path.join(_dirname, '/frontend/dist')));
-app.get("/", (_, res) => {
+app.get("/verify-email/:token", (req, res) => {
     res.sendFile(path.join(_dirname, '/frontend/dist/index.html'));
 });
 
