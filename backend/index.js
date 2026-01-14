@@ -13,7 +13,7 @@ const app = express();
 
 
 app.use(cors({
-    origin: "https://servicesrequestmanagementsystem1.onrender.com",
+    origin: "https://services-request-management-system1.vercel.app",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
