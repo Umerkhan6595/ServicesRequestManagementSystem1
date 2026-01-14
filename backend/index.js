@@ -13,7 +13,7 @@ const app = express();
 
 
 app.use(cors({
-    origin: "https://servicesrequestmanagementsystem1.onrender.com/",
+    origin: "http://localhost:5173/",
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
